@@ -33,3 +33,21 @@ public:
         return result;
     }
 };
+
+Improved Version: (遍历）
+class Solution {
+public:
+    int findMaxConsecutiveOnes(vector<int>& nums) {
+        int maxnum = 0, count = 0;
+        for(int i = 0; i < nums.size(); ++i){
+             if(nums[i] == 0){
+                 maxnum = max(maxnum, count);
+                 count = 0;
+                 continue;
+             }
+             count++;
+         }
+        maxnum = maxnum > count ? maxnum : count;
+        return maxnum;
+    }
+};
