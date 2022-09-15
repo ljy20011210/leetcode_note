@@ -1,0 +1,41 @@
+Initial Solution:
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        if (nums.size()==0) 
+            return 0;
+        if (nums.size()==1 && nums[0]==val)
+            return 0;
+        int p = 0;
+        int q = nums.size()-1;
+        while (p<q){
+            if (nums[p]!=val)
+                p++;
+            else if (nums[p]==val){
+                swap(nums[p],nums[q]);
+                q--;
+            }
+        }
+        if (nums[p]!=val)
+            return p+1;
+        else
+            return p;
+    }
+};
+
+Improved Version:
+class Solution {
+public:
+    int removeElement(vector<int>& nums, int val) {
+        int left = 0, right = nums.size();
+        while (left < right) {
+            if (nums[left] == val) {
+                nums[left] = nums[right - 1];
+                right--;
+            } else {
+                left++;
+            }
+        }
+        return left;
+    }
+};
