@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int thirdMax(vector<int>& nums) {
+        int len = nums.size();
+        if (len==1) return nums[0];
+        if (len==2) return max(nums[0],nums[1]);
+        int maxnum = nums[0];
+        for (int i=0;i<len;i++){
+            if (nums[i]>maxnum) maxnum = nums[i];
+        }
+        auto iter1 = std::remove(nums.begin(), nums.end(), maxnum);
+        nums.erase(iter1, nums.end());
+        if (nums.size()==0) return maxnum;
+        int second = nums[0];
+        for (int j=0;j<nums.size();j++){
+            if (nums[j]>second) second = nums[j];
+        }
+        auto iter2 = std::remove(nums.begin(), nums.end(), second);
+        nums.erase(iter2, nums.end());
+        if (nums.size()==0) return maxnum;
+        int third = nums[0];
+        for (int k=0;k<nums.size();k++){
+            if (nums[k]>third) third = nums[k];
+        }
+        return third;
+    }
+};
+
+Improved Version:
+先排序，再找第三大的，判断元素和上个元素是否相同
+class Solution {
+public:
+    int thirdMax(vector<int>& nums) {
+        sort(nums.begin(),nums.end(),greater<>());
+        int diff = 1;
+        for (int i=1;i<nums.size();i++){
+            if (nums[i]!=nums[i-1]) diff++;
+            if (diff==3) return nums[i];
+        }
+        return nums[0];
+    }
+};
