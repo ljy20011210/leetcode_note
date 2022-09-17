@@ -1,0 +1,48 @@
+对头节点和非头节点分别处理：
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        //头结点处理
+        while (head!=NULL && head->val==val){
+            ListNode* tmp = head;
+            head = head->next;
+            delete tmp;
+        }
+        //非头结点处理
+        ListNode* cur = head;
+        while (cur!=NULL && cur->next!=NULL){
+            if (cur->next->val==val){
+                ListNode* tmp = cur->next;
+                cur->next = cur->next->next;
+                delete tmp;
+            }
+            else{
+                cur = cur->next;
+            }
+        }
+        return head;
+    }
+};
+
+虚拟头节点：（注意free虚拟头节点的内存）
+class Solution {
+public:
+    ListNode* removeElements(ListNode* head, int val) {
+        ListNode* dummyhead = new ListNode(0);
+        dummyhead->next = head;
+        ListNode* cur = dummyhead;
+        while (cur->next!=NULL){
+            if (cur->next->val==val){
+                ListNode* tmp = cur->next;
+                cur->next = cur->next->next;
+                delete tmp;
+            }
+            else{
+                cur = cur->next;
+            }
+        }
+        head = dummyhead->next;
+        delete dummyhead;
+        return head;
+    }
+};
