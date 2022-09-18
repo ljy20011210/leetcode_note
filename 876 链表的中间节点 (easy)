@@ -1,0 +1,33 @@
+Initial Solution:（单指针法）
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* cur = head;
+        int count = 0;
+        while (cur){
+            count++;
+            cur = cur->next;
+        }
+        int target = count/2+1;
+        int n = 0;
+        cur = head;
+        while (++n<target){
+            cur = cur->next;
+        }
+        return cur;
+    }
+};
+
+Improved Version: （快慢指针法）
+class Solution {
+public:
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while (fast!=NULL && fast->next!=NULL){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+};
