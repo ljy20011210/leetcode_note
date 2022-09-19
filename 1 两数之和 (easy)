@@ -1,3 +1,4 @@
+Initial Solution:
 class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target) {
@@ -12,5 +13,21 @@ public:
             }
         }
         return result;
+    }
+};
+
+Improved Version：（哈希表法）
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        std::unordered_map <int,int> map;
+        for (int i=0;i<nums.size();i++){
+            int s = target-nums[i];
+            auto iter = map.find(s);
+            if (iter!=map.end())
+                return {iter->second,i};
+            map.insert(pair<int,int>(nums[i],i));
+        }
+         return {};       
     }
 };
