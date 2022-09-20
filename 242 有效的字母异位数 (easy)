@@ -1,0 +1,29 @@
+Initial Sulution：(排序）
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if (s.length()!=t.length())
+            return false;
+        sort(s.begin(),s.end());
+        sort(t.begin(),t.end());
+        return s==t;
+    }
+};
+
+Improved Version:（哈希表法）
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        if (s.length()!=t.length())
+            return false;
+        int hash[26] = {0};
+        for (int i=0;i<s.length();i++)
+            hash[s[i]-'a']++;
+        for (int j=0;j<t.length();j++)
+            hash[t[j]-'a']--;
+        for (int k=0;k<26;k++)
+            if (hash[k]!=0)
+                return false;
+        return true;
+    }
+};
