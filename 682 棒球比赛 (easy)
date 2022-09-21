@@ -1,0 +1,60 @@
+Initial Solution:
+class Solution {
+public:
+    int calPoints(vector<string>& operations) {
+        stack<int> st;
+        for (int i=0;i<operations.size();i++){
+            if (operations[i]=="D")
+                st.push(st.top()*2);
+            else if (operations[i]=="C")
+                st.pop();
+            else if (operations[i]=="+"){
+                int first = st.top();
+                st.pop();
+                int second = st.top();
+                st.push(first);
+                st.push(first+second);
+                
+            }
+            else
+                st.push(stoi(operations[i]));
+        }
+        int sum = 0;
+        while (!st.empty()){
+            sum += st.top();
+            st.pop();
+        }
+        return sum;
+    }
+};
+
+Improved version:
+class Solution {
+public:
+    int calPoints(vector<string>& operations) {
+        vector<int> score;
+        int sum = 0;
+        for (auto &op:operations){
+            int n = score.size();
+            switch (op[0]){
+                case '+':
+                    sum += score[n-1]+score[n-2];
+                    score.push_back(score[n-1]+score[n-2]);
+                    break;
+                case 'D':
+                    sum += score[n-1]*2;
+                    score.push_back(score[n-1]*2);
+                    break;
+                case 'C':
+                    sum -= score[n-1];
+                    score.pop_back();
+                    break;
+                default:
+                    sum += stoi(op);
+                    score.push_back(stoi(op));
+                    break;
+            }
+        }
+        return sum;
+    }
+};
