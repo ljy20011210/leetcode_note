@@ -1,0 +1,35 @@
+Initial Solution:
+class MovingAverage {
+    queue<int> q;
+    int size;
+    double sum;
+public:
+    /** Initialize your data structure here. */
+    MovingAverage(int size) {
+        this->size = size;
+        this->sum = 0.0;
+    }
+    
+    double next(int val) {
+        double result;
+        if (q.size()==size){
+            sum -= q.front();
+            q.pop();
+            q.push(val);
+            sum += val;
+            result = double(sum/size);
+        }
+        else{
+            q.push(val);
+            sum += val;
+            result = double(sum/q.size());
+        }
+        return result;
+    }
+};
+
+/**
+ * Your MovingAverage object will be instantiated and called as such:
+ * MovingAverage* obj = new MovingAverage(size);
+ * double param_1 = obj->next(val);
+ */
