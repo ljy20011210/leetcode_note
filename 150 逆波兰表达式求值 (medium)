@@ -1,0 +1,66 @@
+Initial Splution:（注意乘法overflow）
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<long> st;
+        for (int i=0;i<tokens.size();i++){
+            if (tokens[i]=="+"){
+                int add1 = st.top();
+                st.pop();
+                int add2 = st.top();
+                st.pop();
+                st.push(add1+add2);
+            }
+            else if (tokens[i]=="*"){
+                int mul1 = st.top();
+                st.pop();
+                int mul2 = st.top();
+                st.pop();
+                st.push((long)mul1*(long)mul2);
+            }
+            else if (tokens[i]=="/"){
+                int div1 = st.top();
+                st.pop();
+                int div2 = st.top();
+                st.pop();
+                st.push(int(div2/div1));
+            }
+            else if (tokens[i]=="-"){
+                int minus1 = st.top();
+                st.pop();
+                int minus2 = st.top();
+                st.pop();
+                st.push(minus2-minus1);
+            }
+            else{
+                st.push(stoi(tokens[i]));
+            }
+        }
+        return st.top();
+    }
+};
+
+Improved Version: （合并版）
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<long> st;
+        for (int i=0;i<tokens.size();i++){
+            if (tokens[i]=="+" || tokens[i]=="*" || tokens[i]=="/" || tokens[i]=="-"){
+                int num1 = st.top();
+                st.pop();
+                int num2 = st.top();
+                st.pop();
+                if (tokens[i]=="+") st.push(num1+num2);
+                if (tokens[i]=="-") st.push(num2-num1);
+                if (tokens[i]=="/") st.push(num2/num1);
+                if (tokens[i]=="*") st.push((long)num1*(long)num2);
+            
+            }
+            else{
+                st.push(stoi(tokens[i]));
+            }
+        }
+        return st.top();
+    }
+};
