@@ -1,0 +1,47 @@
+Initial Solution:
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int i;
+        for (i=1;i<arr.size()-1;i++){
+            if (arr[i]>arr[i-1] && arr[i]>arr[i+1])
+                break;
+        }
+        return i;
+    }
+};
+
+Improved Version:（二分法）
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int left = 0;
+        int right = arr.size()-1;
+        int ans;
+        while (left<=right){
+            int middle = left+(right-left)/2;
+            if (arr[middle]>arr[middle+1]){
+                ans = middle;
+                right = middle-1;
+            }
+            else
+                left = middle+1;
+        }
+        return ans;
+    }
+};
+
+（遍历）
+class Solution {
+public:
+    int peakIndexInMountainArray(vector<int>& arr) {
+        int ans;
+        for (int i=0;i<arr.size()-1;++i){
+            if (arr[i]>arr[i+1]){
+                ans = i;
+                break;
+            }
+        }
+        return ans;
+    }
+};
