@@ -1,0 +1,17 @@
+Initial Solution:（哈希表法）
+class Solution {
+public:
+    bool canConstruct(string ransomNote, string magazine) {
+        int hash1[26] = {0};
+        int hash2[26] = {0};
+        for (int i=0;i<ransomNote.length();i++)
+            hash1[ransomNote[i]-'a']++;
+        for (int j=0;j<magazine.length();j++)
+            hash2[magazine[j]-'a']++;
+        for (int k=0;k<26;k++){
+            if (hash1[k]>hash2[k])
+                return false;
+        }
+        return true;
+    }
+};
