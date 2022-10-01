@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int len_a = a.length();
+        int len_b = b.length();
+        //补位，让两个字符串长度相等
+        while (len_a<len_b){
+            a = '0'+a;
+            len_a++;
+        }
+        while (len_a>len_b){
+            b = '0'+b;
+            len_b++;
+        }
+        //进行计算，从后向前遍历
+        int carry = 0;
+        for (int i=len_a-1;i>=0;i--){
+            int sum = a[i]-'0'+b[i]-'0'+carry;
+            a[i] = sum%2+'0';//和为2变0
+            carry = sum/2;//计算进位
+        }
+        //进位溢出
+        if (carry>0)
+            a = '1'+a;
+        return a;
+    }
+};
