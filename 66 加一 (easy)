@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        //从末尾开始遍历，碰到9就变0，不是9就+1并返回
+        for (int i=digits.size()-1;i>=0;i--){
+            if (digits[i]==9)
+                digits[i] = 0;
+            else{
+                digits[i]++;
+                return digits;
+            }
+        }
+        //全由9组成
+        vector<int> result(digits.size()+1);
+        result[0] = 1;
+        return result;
+    }
+};
