@@ -1,0 +1,58 @@
+Initial Solution:
+class Solution {
+public:
+    int distanceBetweenBusStops(vector<int>& distance, int start, int destination) {
+        int clock = 0;
+        int counter = 0;
+        int sum = 0;
+        for (int i=0;i<distance.size();i++)
+            sum += distance[i];
+        if (start==destination)
+            return 0;
+        else if (start<destination){
+            for (int j=start;j<destination;++j)
+                clock += distance[j];
+            counter = sum-clock;
+        }
+        else{
+            for (int k=destination;k<start;++k)
+                counter += distance[k];
+            clock = sum-counter;
+        }
+        return min(clock,counter);
+    }
+};
+
+Improved Version:（运用accumulate函数）
+class Solution {
+public:
+    int distanceBetweenBusStops(vector<int>& distance, int start, int destination) {
+        if (start>destination)
+            swap(start,destination);
+        int clock = accumulate(distance.begin()+start,distance.begin()+destination,0);
+        int counter = accumulate (distance.begin(),distance.begin()+start,0)+
+                    accumulate(distance.begin()+destination,distance.end(),0);
+        return min(clock,counter);
+    }
+};
+（运用swap函数把原版改进，速度更快）
+class Solution {
+public:
+    int distanceBetweenBusStops(vector<int>& distance, int start, int destination) {
+        int clock = 0;
+        int counter = 0;
+        int sum = 0;
+        for (int i=0;i<distance.size();i++)
+            sum += distance[i];
+        if (start>destination)
+            swap(start,destination);
+        if (start==destination)
+            return 0;
+        else{
+            for (int j=start;j<destination;++j)
+                clock += distance[j];
+            counter = sum-clock;
+        }
+        return min(clock,counter);
+    }
+};
