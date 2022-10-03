@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string s) {
+        vector<string> str;
+        //截取单词
+        stringstream ss(s);
+        string word;
+        while (ss>>word)
+            str.push_back(word);
+        //先判断两个对应长度是否相同
+        if (str.size()!=pattern.length())
+            return false;
+        unordered_map<char,string> ch2str;//判断是不是单射
+        unordered_map<string,char> str2ch;//判断是不是映射
+        for (int i=0;i<pattern.length();i++){
+            auto ch = pattern[i];
+            auto st = str[i];
+            if (ch2str.count(ch) && ch2str[ch]!=st)
+                return false;
+            ch2str[ch] = st;
+            if (str2ch.count(st) && str2ch[st]!=ch)
+                return false;
+            str2ch[st] = ch;
+        }
+        return true;
+    }
+};
