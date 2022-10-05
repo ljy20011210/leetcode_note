@@ -1,0 +1,21 @@
+滑动窗口
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        if (s.length()==0)
+            return 0;
+        unordered_set<char> substr;
+        int j = 0;
+        int maxlength = 0;
+        for (int i=0;i<s.length();i++){
+            //如果重复了，就把s[j]删去
+            while (substr.find(s[i])!=substr.end()){
+                substr.erase(s[j]);
+                j++;
+            }
+            maxlength = max(maxlength,i-j+1);
+            substr.insert(s[i]);
+        }
+        return maxlength;
+    }
+};
