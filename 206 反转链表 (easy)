@@ -22,7 +22,7 @@ public:
             return prev;
         ListNode* tmp = cur->next;
         cur->next = prev;
-        return reverse(tmp,cur);
+        return reverse(cue,temp);
     }
     ListNode* reverseList(ListNode* head) {
         return reverse(nullptr,head);
