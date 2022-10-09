@@ -1,0 +1,38 @@
+class Solution {
+public:
+    string simplifyPath(string path) {
+        //用vector模拟栈
+        vector<string> st;
+        int n = path.size();
+        int i = 0;
+        string str = "";
+        while (i<n){
+            //遇到/一直往后，直到非斜杠
+            if (path[i]=='/')
+                ++i;
+            else{
+                //将两斜杠之间的字符组成串
+                for (;i<n&&path[i]!='/';++i)
+                    str += path[i];
+                if (str==".") ;//注意string用双引号
+                else if (str==".."){
+                    //弹出栈顶
+                    if (!st.empty())
+                        st.pop_back();
+                }
+                //其余情况都是文件名
+                else
+                    st.push_back(str);
+                //str清空，拜访下一个文件名
+                str = "";
+            }
+        }
+        //如果栈为空，表示仍在根目录
+        if (st.empty())
+            return "/";
+        string ans = "";
+        for (auto& s:st)
+            ans += ('/'+s);
+        return ans;
+    }
+};
