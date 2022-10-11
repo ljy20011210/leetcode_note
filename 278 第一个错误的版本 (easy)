@@ -1,0 +1,51 @@
+Initial Version:
+// The API isBadVersion is defined for you.
+// bool isBadVersion(int version);
+
+class Solution {
+public:
+    int firstBadVersion(int n) {
+        int left = 1;
+        int right = n;
+        int result;
+        if (n==1) return 1;
+        while (left<=right){
+            int middle = left+(right-left)/2;
+            if (middle==1 && isBadVersion(middle)){
+                result = 1;
+                break;
+            }
+            else if (isBadVersion(middle) && !isBadVersion(middle-1)){
+                result = middle;
+                break;
+            }
+            else if (isBadVersion(middle) && isBadVersion(middle-1))
+                right = middle-1;
+            else
+                left = middle+1;
+        }
+        return result;
+    }
+};
+
+Improved Version:
+// The API isBadVersion is defined for you.
+// bool isBadVersion(int version);
+
+class Solution {
+public:
+    int firstBadVersion(int n) {
+        int left = 1;
+        int right = n;
+        //紧缩左边界
+        while (left<right){
+            int middle = left+(right-left)/2;
+            if (isBadVersion(middle))//错的在[left,middle]
+                right = middle;
+            else//错的在[middle+1,right]
+                left = middle+1;
+        }
+        //此时left=right
+        return left;
+    }
+};
