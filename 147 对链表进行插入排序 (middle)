@@ -1,0 +1,41 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        if (head==nullptr)
+            return head;
+        ListNode* dummyhead = new ListNode(0);
+        dummyhead->next = head;
+        //已排序的链表里最后一个node
+        ListNode* lastSorted = head;
+        //cur为待插入的元素
+        ListNode* cur = head->next;
+        while (cur!=nullptr){
+            //需要排序的数比已排序链表里最后一个大，不需要移动
+            if (lastSorted->val<=cur->val)
+                lastSorted = lastSorted->next;
+            else{
+                //否则从头节点开始遍历，找到插入cur的位置
+                //prev为插入cur的位置前一个位置v
+                ListNode* prev = dummyhead;
+                //找插入的位置
+                while (prev->next->val<=cur->val)
+                    prev = prev->next;
+                lastSorted->next = cur->next;
+                cur->next = prev->next;
+                prev->next = cur;
+            }
+            cur = lastSorted->next;
+        }
+        return dummyhead->next;
+    }
+};
