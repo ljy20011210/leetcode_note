@@ -1,0 +1,33 @@
+Initial Version:
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        unordered_set<int> s;
+        for (int i=0;i<nums.size();i++){
+            //在set中找到了这个数，说明之前已经出现过
+            //把这个数从set中删了
+            if (s.find(nums[i])!=s.end())
+                s.erase(nums[i]);
+            //没找到说明还没出现过
+            //插入
+            else
+                s.insert(nums[i]);
+        }
+        return *s.begin();
+    }
+};
+
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        unordered_map<int,int> map;
+        int ans;
+        for (int num:nums)
+            map[num]++;
+        for (int num:nums){
+            if (map[num]==1)
+                ans = num;
+        }
+        return ans;
+    }
+};
