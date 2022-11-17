@@ -1,0 +1,17 @@
+哈希表
+class Solution {
+public:
+    char findTheDifference(string s, string t) {
+        vector<int> cnt(26,0);
+        int ans = 0;
+        for (int i=0;i<s.size();i++)
+            cnt[s[i]-'a']++;
+        for (int j=0;j<t.size();j++)
+            cnt[t[j]-'a']--;
+        for (int k=0;k<26;k++){
+            if (cnt[k]<0)
+                ans = k;
+        }
+        return 'a'+ans;
+    }
+};
