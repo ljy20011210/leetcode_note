@@ -1,0 +1,47 @@
+哈希表
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        unordered_map<int,int> s; 
+        for (int i=0;i<nums.size();i++){
+            if (s.find(nums[i])!=s.end()){
+                if (i-s[nums[i]]<=k)
+                    return true;
+                s.erase(s.find(nums[i]));
+            }
+            s[nums[i]] = i;
+        }
+        return false;
+    }
+};
+
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        unordered_map<int,int> map; 
+        for (int i=0;i<nums.size();i++){
+            int num = nums[i];
+            if (map.count(num) && i-map[num]<=k)
+                return true;
+            map[num] = i;
+        }
+        return false;
+    }
+};
+
+滑动窗口：
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        unordered_set<int> s; 
+        for (int i=0;i<nums.size();i++){
+            int num = nums[i];
+            if (s.count(num))
+                return true;
+            s.insert(num);
+            if (s.size()>k)
+                s.erase(nums[i-k]);
+        }
+        return false;
+    }
+};
