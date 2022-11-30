@@ -1,0 +1,25 @@
+栈
+class Solution {
+public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        vector<int> st;
+        for (auto aster : asteroids){
+            bool alive = true;
+            //两个行星对撞的条件：
+            //1. alive
+            //2. aster向左移动
+            //3. 栈不为空
+            //4. 栈顶向右移动
+            while (alive && aster<0 && !st.empty() && st.back()>0){
+                //aster小于等于栈顶时，该小行星爆炸
+                alive = -aster>st.back();
+                //栈顶爆炸
+                if (st.back()<=-aster)
+                    st.pop_back();
+            }
+            if (alive)
+                st.push_back(aster);
+        }
+        return st;
+    }
+};
